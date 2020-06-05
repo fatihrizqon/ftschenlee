@@ -607,10 +607,10 @@ active
                 <div style="padding-left:20px;padding-right:20px;"class="row">
                     <br>
                     @if ($hasil['model']=='sama')
-                    <p>Berdasarkan hasil perhitungan Prediksi Harga Minyak Dunia Menggunakan Fuzzy Time Series dengan membandingkan Model Chen dan Lee didapatkan bahwa Model Chen dan Model Lee memiliki tingkat akurasi yang sama yaitu mencapai {{$hasil['accuration']}}%
+                    <p>Berdasarkan hasil perhitungan Prediksi Data Time Series Anda Menggunakan Fuzzy Time Series dengan membandingkan Model Chen dan Lee didapatkan bahwa Model Chen dan Model Lee memiliki tingkat akurasi yang sama yaitu mencapai {{$hasil['accuration']}}%
                         </p>
                     @else
-                    <p>Berdasarkan hasil perhitungan Prediksi Harga Minyak Dunia Menggunakan Fuzzy Time Series dengan membandingkan Model Chen dan Lee didapatkan bahwa Model {{$hasil['model']}} Lebih baik dengan tingkat akurasi mencapai {{$hasil['accuration']}}%
+                    <p>Berdasarkan hasil perhitungan Prediksi Data Time Series Anda Menggunakan Fuzzy Time Series dengan membandingkan Model Chen dan Lee didapatkan bahwa Model {{$hasil['model']}} Lebih baik dengan tingkat akurasi mencapai {{$hasil['accuration']}}%
                         </p>
                     @endif
                 </div>
