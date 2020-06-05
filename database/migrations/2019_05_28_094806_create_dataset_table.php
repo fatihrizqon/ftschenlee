@@ -16,7 +16,7 @@ class CreateDatasetTable extends Migration
         Schema::create('dataset', function (Blueprint $table) {
             $table->increments('id');
             $table->String('tanggal');
-            $table->integer('data')->nullable();
+            $table->integer('data');
             $table->timestamps();
         });
     }
