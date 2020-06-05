@@ -21,10 +21,10 @@ class DatasetController extends Controller
 
     // Import Datasheet from Excel
     public function import(Request $request){
-      die("Import Works");
       if ($request->excel->getClientOriginalExtension() !='xlsx') {
           return redirect(route('home'))->with('warning', 'Wrong file format! Your file must be .xlsx!');
       }
+      die("Import Success");
       Excel::load($request->file('excel'), function ($reader) {
           $reader->each(function ($sheet) {
             if (empty($sheet->tanggal) || empty($sheet->data)) {
