@@ -30,7 +30,7 @@ class DatasetController extends Controller
             }else {
               $data = Dataset::firstOrCreate (
                 ['tanggal' => $sheet->tanggal],
-                ['data'    => $sheet->data]
+                // ['data'    => $sheet->data]
               );
             }
           });
