@@ -19,6 +19,10 @@ class DatasetController extends Controller
       return redirect(route('dataset'))->with('danger', 'Reset Data success!');
     }
 
+    public function download_template(){
+      return response()->download(storage_path("app/public/template_data.xlsx"));
+    }
+
     // Import Datasheet from Excel
     public function import(Request $request){
       if ($request->excel->getClientOriginalExtension() !='xlsx') {
