@@ -21,6 +21,7 @@ class DatasetController extends Controller
 
     // Import Datasheet from Excel
     public function import(Request $request){
+      die("Import Works");
       if ($request->excel->getClientOriginalExtension() !='xlsx') {
           return redirect(route('home'))->with('warning', 'Wrong file format! Your file must be .xlsx!');
       }
