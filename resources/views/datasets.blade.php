@@ -54,6 +54,14 @@ active
                 </div>
               </div>
               @endif
+              @if (session()->has('empty'))
+              <div role="alert" class="alert alert-contrast alert-danger alert-dismissible">
+                <div class="icon"><span class="mdi mdi-check"></span></div>
+                <div class="message">
+                  <button type="button" data-dismiss="alert" aria-label="Close" class="close"><span aria-hidden="true" class="mdi mdi-close"></span></button><strong>Warning!</strong> {{Session::get('empty')}}
+                </div>
+              </div>
+              @endif
             </div>
 
             <div class="row">

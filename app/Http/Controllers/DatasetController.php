@@ -19,12 +19,17 @@ class DatasetController extends Controller
       return redirect(route('dataset'))->with('danger', 'Reset Data success!');
     }
 
-    public function download_template(){
-      return response()->download(storage_path("app/public/template_data.xlsx"));
-    }
-
     // Import Datasheet from Excel
     public function import(Request $request){
+
+      $validator = Validator::make($request->all(), [
+        'excel' => 'required',
+      ]);
+
+      if ($validator->fails()) {
+        return redirect(route('home'))->with('empty', 'Please select file before import your data!');
+      }
+
       if ($request->excel->getClientOriginalExtension() !='xlsx') {
           return redirect(route('home'))->with('warning', 'Wrong file format! Your file must be .xlsx!');
       }
