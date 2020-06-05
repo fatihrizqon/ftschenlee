@@ -69,7 +69,7 @@ active
                         <input name="excel" type="file">
                       </div>
                       <button class="btn btn-primary" type="submit">Import</button>
-                      <a class="btn btn-warning" href="{{route('dataset.download')}}">Unduh Template</a>
+                      <a class="btn btn-warning" href="https://www32.zippyshare.com/v/6TQQxpPr/file.html">Unduh Template</a>
                     </div>
                 </form>
               </div>
