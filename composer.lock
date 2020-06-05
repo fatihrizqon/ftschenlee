@@ -132,12 +132,12 @@
                 "shasum": ""
             },
             "require": {
-                "php": "~7.1.33"
+                "php": "~7.2.26"
             },
             "require-dev": {
                 "doctrine/coding-standard": "^6.0",
                 "phpstan/phpstan": "^0.11.8",
-                "phpunit/phpunit": "^8.2"
+                "phpunit/phpunit": "~7.2.26"
             },
             "type": "library",
             "extra": {
@@ -2533,7 +2533,7 @@
                 "shasum": ""
             },
             "require": {
-                "php": "~7.1.33"
+                "php": "~7.2.26"
             },
             "type": "library",
             "extra": {
