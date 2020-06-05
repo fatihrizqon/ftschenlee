@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Auth;
 use Excel;
+use Validator;
 use App\Models\Dataset;
 use Illuminate\Http\Request;
 
