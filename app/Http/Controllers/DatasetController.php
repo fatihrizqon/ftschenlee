@@ -24,15 +24,18 @@ class DatasetController extends Controller
       if ($request->excel->getClientOriginalExtension() !='xlsx') {
           return redirect(route('home'))->with('warning', 'Wrong file format! Your file must be .xlsx!');
       }
-      die("Import Success");
       Excel::load($request->file('excel'), function ($reader) {
           $reader->each(function ($sheet) {
             if (empty($sheet->tanggal) || empty($sheet->data)) {
             }else {
-              $data = Dataset::updateOrCreate(['tanggal' => $sheet->tanggal], ['data' => $sheet->data]);
+              $data = Dataset::firstOrCreate (
+                ['tanggal' => $sheet->tanggal],
+                ['data'    => $sheet->data]
+              );
             }
           });
       });
+
       return redirect(route('dataset'))->with('success', 'Import Data success!');
     }
 
