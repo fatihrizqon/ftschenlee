@@ -20398,3 +20398,11 @@ fieldset[disabled] .full-calendar .fc-button.active {
     margin-bottom: 0px !important;
   }
 }
+
+/* 
+Generic Styling, for Desktops/Laptops 
+*/
+table { 
+  width: 100%; 
+  border-collapse: collapse; 
+}
