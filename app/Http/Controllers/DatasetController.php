@@ -56,8 +56,8 @@ class DatasetController extends Controller
         $y=0;
         if ($i>=$orde) {
             foreach ($interval as $key2) {
-              if ( $key->data >= $key2['bawah'] && $key->data < $key2['atas']) {
-                $fuzzyfikasi = $y;
+              if ( $key->data >= $key2['bottom'] && $key->data < $key2['top']) {
+                $fuzzification = $y;
               }
             $y++;
             }
@@ -65,16 +65,16 @@ class DatasetController extends Controller
             $temp_orde['orde'.$n] = $data[$i-$orde+$n]['fuzzification'];
           }
           $object = (object)($temp_orde);
-          $data[$i]=['tanggal'=>$key->tanggal, 'data'=>$key->data, 'fuzzification'=>$fuzzyfikasi,'orde'=>$object];
-    
+          $data[$i]=['tanggal'=>$key->tanggal, 'data'=>$key->data, 'fuzzification'=>$fuzzification,'orde'=>$object];
+
         }else{
           foreach ($interval as $key2) {
-            if ( $key->data >= $key2['bawah'] && $key->data < $key2['atas']) {
-              $fuzzyfikasi = $y;
+            if ( $key->data >= $key2['bottom'] && $key->data < $key2['top']) {
+              $fuzzification = $y;
             }
             $y++;
           }
-        $data[$i]=['tanggal'=>$key->tanggal, 'data'=>$key->data, 'fuzzification'=>$fuzzyfikasi,'orde'=>null];
+        $data[$i]=['tanggal'=>$key->tanggal, 'data'=>$key->data, 'fuzzification'=>$fuzzification,'orde'=>null];
         }
         $i++;
       }
@@ -385,20 +385,47 @@ class DatasetController extends Controller
         return redirect(route('dataset'))->with('warning', 'Dataset does not exists!');
       }
       $data['dataset'] = $dataset;
-      $k=(int)round(1+3.3*log10($data_count));
-      $data['k']=$k;
-      $max=Dataset::max('data'); #find max data value
-      $min=Dataset::min('data'); #find min data value
-      $interval=round(($max-$min)/$k,2); #get interval value
-      $data['range']=$interval;
+      $k=(int)round(1+3.3*log10($data_count)); # class count
+      $data['k']=$k; # class count inserted into variables
+      // ERROR DI SINI, MAX MIN GAK MUNCUL APABILA DATA KECIL
+      $max = Dataset::max('data'); # get max data value
+      $data['max'] = (int)$max;
+      $min = Dataset::min('data'); # get min data value
+      $data['min'] = (int)$min;
+      $d1 = substr($min, -2); # D1
+      $d1 = (int)$d1;
+      $data['d1'] = $d1;
+      if($d1 == 0){
+        $umin = $min;
+      }else{
+        $umin = $min - $d1;
+      }
+      $d2 = substr($max, -2); # D2
+      $d2 = (int)$d2;
+      $data['d2'] = $d2;
+      if($d2 == 0){
+        $umax = $max;
+      }else{
+        $umax = $max - $d2;
+      }
+      $data['umin'] = $umin;
+      $data['umax'] = $umax;
+      // $k = (int)round(1+3.3*log10($data_count));
+      // $data['k']= $k; # class count inserted into variables
+      $class_length= ($umax - $umin)/$k; # definiting class length
+      $data['class_length']= $class_length; # class count inserted into variables
+      $interval = (int)($umax - $umin)/$k; # new interval
+      // $interval=round(($max-$min)/$k,2); #get interval value
+      $data['range']=$interval; 
+
       $i=0;
       $temp=$min;
       for ($i=0;$i<$k;$i++) {
         $bottom=$temp;
         $temp+=$interval;
-        $data['interval'][$i] = ['bawah'=>$bottom,'atas'=>$temp,'median'=>($bottom+$temp)/2];
+        $data['interval'][$i] = ['bottom'=>$bottom,'top'=>$temp,'median'=>($bottom+$temp)/2];
       }
-
+      
       $data['flr']                  = $this->fuzzification($dataset, $data['interval'], $orde);
       $data['orde']                 = $orde;
       $data['flrg_lee']             = $this->flrg_lee($data['flr']);

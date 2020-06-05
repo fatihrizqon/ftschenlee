@@ -1,7 +1,7 @@
 @extends('layouts.home')
 
 @section('title')
-result
+Hasil Perhitungan
 @endsection
 
 @section('perhitungan')
@@ -14,10 +14,56 @@ active
 </div>
 <div class="main-content container-fluid">
     <div class="row">
+    <!-- Pendefinisian -->
+    <div class="col-xs-12">
+        <div class="panel panel-default">
+            <div class="panel-heading panel-heading-divider">Pendefinisian</div>
+            <div class="panel-body">
+            <table class="col-xs-4" style="border:none;">
+                <tbody>
+                    <tr>
+                        <td>Data Minimum (Min)</td>
+                        <td>: {{$min}}</td>
+                    </tr>
+                    <tr>
+                        <td>Data Maksimum (Max)</td>
+                        <td>: {{$max}}</td>
+                    </tr>
+                    <tr>
+                        <td>D1</td>
+                        <td>: {{$d1}}</td>
+                    </tr>
+                    <tr>
+                        <td>D2</td>
+                        <td>: {{$d2}}</td>
+                    </tr>
+                    <tr>
+                        <td>U min</td>
+                        <td>: {{$umin}}</td>
+                    </tr>
+                    <tr>
+                        <td>U max</td>
+                        <td>: {{$umax}}</td>
+                    </tr>
+                    <tr>
+                        <td>Jumlah Kelas</td>
+                        <td>: {{$k}}</td>
+                    </tr>
+                    <tr>
+                        <td>Panjang Kelas</td>
+                        <td>: {{$class_length}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            </div>
+        </div>
+    </div>
+
     <!-- Jumlah Interval -->
     <div class="col-xs-12">
         <div class="panel panel-default">
-            <div class="panel-heading panel-heading-divider">Jumlah Interval {{$k}} dan Lebar Interval {{$range}} <span class="panel-subtitle"></span></div>
+            <div class="panel-heading panel-heading-divider">Jumlah Kelas {{$k}} dan Lebar Interval {{$range}} <span class="panel-subtitle"></span></div>
             <div class="panel-body">
                 <div class="row">
                     <br>
@@ -55,7 +101,7 @@ active
                             @foreach ($interval as $key)
                                 <tr>
                                 <td class="center">{{$i}}</td>
-                                <td class="center">U{{$i}} = [{{$key['bawah']}} - {{$key['atas']}}]</td>
+                                <td class="center">U{{$i}} = [{{$key['bottom']}} - {{$key['top']}}]</td>
                                 <td class="center">{{$key['median']}}</td>
                                 </tr>
                                 @php
