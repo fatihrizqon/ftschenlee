@@ -132,7 +132,7 @@
                 "shasum": ""
             },
             "require": {
-                "php": "~7.1.3"
+                "php": "~7.1.33"
             },
             "require-dev": {
                 "doctrine/coding-standard": "^6.0",
