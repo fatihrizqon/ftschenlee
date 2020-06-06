@@ -22,7 +22,7 @@ active
             </h4>
             <span class="panel-subtitle">
                 <li>Import Data menggunakan format file yang telah ditentukan (.xlsx) dengan cara "Choose File" lalu klik "Import"</li>
-                <li>Jika Data anda berhasil tampil, klik "Hitung Data" dan tentukan Jumlah Orde yang anda inginkan.</li>
+                <li>Jika Data telah berhasil tampil, klik "Hitung Data" untuk menampilkan hasil perhitungan, dan tentukan Jumlah Orde yang anda inginkan (minimal orde 1).</li>
                 <li>Apabila anda ingin merubah data, klik "Reset Data" untuk menghapus seluruh data anda, lalu lakukan Import Ulang dengan data terbaru anda.</li>
                 <li>Klik Unduh Template, untuk mengunduh template data agar sesuai dengan format database pada sistem ini.</li>
             </span>
