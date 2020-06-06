@@ -12,7 +12,7 @@ class DatasetController extends Controller
 {
     public function index(){
         $data['dataset']= Dataset::all();
-        return redirect(route('dataset'));
+        return view('datasets',$data);
     }
 
     public function reset(){
