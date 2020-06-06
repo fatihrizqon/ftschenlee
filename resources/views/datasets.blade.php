@@ -21,11 +21,11 @@ active
               Panduan :
             </h4>
             <span class="panel-subtitle">
-                <li>Import Data menggunakan format file yang telah ditentukan (.xlsx) dengan cara "Choose File" lalu klik "Import"<div class=""></div></li>
+                <li>Import Data menggunakan format file yang telah ditentukan (.xlsx) dengan cara "Choose File" lalu klik "Import"</li>
                 <li>Jika Data anda berhasil tampil, klik "Hitung Data" dan tentukan Jumlah Orde yang anda inginkan.</li>
                 <li>Apabila anda ingin merubah data, klik "Reset Data" untuk menghapus seluruh data anda, lalu lakukan Import Ulang dengan data terbaru anda.</li>
                 <li>Klik Unduh Template, untuk mengunduh template data agar sesuai dengan format database pada sistem ini.</li>
-              </span>
+            </span>
           
           </div>
           <div class="panel-body">
@@ -48,7 +48,7 @@ active
               @endif
               @if (session()->has('danger'))
               <div role="alert" class="alert alert-contrast alert-danger alert-dismissible">
-                <div class="icon"><span class="mdi mdi-check"></span></div>
+                <div class="icon"><span class="mdi mdi-alert-circle"></span></div>
                 <div class="message">
                   <button type="button" data-dismiss="alert" aria-label="Close" class="close"><span aria-hidden="true" class="mdi mdi-close"></span></button><strong>Deleted!</strong> {{Session::get('danger')}}
                 </div>
@@ -56,9 +56,17 @@ active
               @endif
               @if (session()->has('empty'))
               <div role="alert" class="alert alert-contrast alert-danger alert-dismissible">
-                <div class="icon"><span class="mdi mdi-check"></span></div>
+                <div class="icon"><span class="mdi mdi-alert-triangle"></span></div>
                 <div class="message">
                   <button type="button" data-dismiss="alert" aria-label="Close" class="close"><span aria-hidden="true" class="mdi mdi-close"></span></button><strong>Warning!</strong> {{Session::get('empty')}}
+                </div>
+              </div>
+              @endif
+              @if (session()->has('zero'))
+              <div role="alert" class="alert alert-contrast alert-warning alert-dismissible">
+                <div class="icon"><span class="mdi mdi-alert-triangle"></span></div>
+                <div class="message">
+                  <button type="button" data-dismiss="alert" aria-label="Close" class="close"><span aria-hidden="true" class="mdi mdi-close"></span></button><strong>Caution!</strong> {{Session::get('zero')}}
                 </div>
               </div>
               @endif

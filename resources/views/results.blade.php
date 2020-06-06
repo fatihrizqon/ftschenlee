@@ -19,7 +19,7 @@ active
         <div class="panel panel-default">
             <div class="panel-heading panel-heading-divider">Pendefinisian</div>
             <div class="panel-body">
-            <table class="col-xs-4" style="border:none;">
+            <table class="col-xs-12" style="border:none;">
                 <tbody>
                     <tr>
                         <td>Data Minimum (Min)</td>
@@ -38,20 +38,20 @@ active
                         <td>: {{$d2}}</td>
                     </tr>
                     <tr>
-                        <td>U min</td>
-                        <td>: {{$umin}}</td>
+                        <td>D min</td>
+                        <td>: {{$dmin}}</td>
                     </tr>
                     <tr>
-                        <td>U max</td>
-                        <td>: {{$umax}}</td>
+                        <td>D max</td>
+                        <td>: {{$dmax}}</td>
                     </tr>
                     <tr>
-                        <td>Jumlah Kelas</td>
+                        <td>Jumlah Interval</td>
                         <td>: {{$k}}</td>
                     </tr>
                     <tr>
-                        <td>Panjang Kelas</td>
-                        <td>: {{$class_length}}</td>
+                        <td>Lebar Interval</td>
+                        <td>: {{$range}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -60,10 +60,10 @@ active
         </div>
     </div>
 
-    <!-- Jumlah Interval -->
+    <!-- Hasil Interval -->
     <div class="col-xs-12">
         <div class="panel panel-default">
-            <div class="panel-heading panel-heading-divider">Jumlah Kelas {{$k}} dan Lebar Interval {{$range}} <span class="panel-subtitle"></span></div>
+            <div class="panel-heading panel-heading-divider">Jumlah Interval {{$k}} dan Lebar Interval {{$range}} <span class="panel-subtitle"></span></div>
             <div class="panel-body">
                 <div class="row">
                     <br>
@@ -91,6 +91,8 @@ active
                         <tr>
                             <th>No</th>
                             <th>Interval</th>
+                            <th>Batas Bawah</th>
+                            <th>Batas Atas</th>
                             <th>Median</th>
                         </tr>
                         </thead>
@@ -101,7 +103,9 @@ active
                             @foreach ($interval as $key)
                                 <tr>
                                 <td class="center">{{$i}}</td>
-                                <td class="center">U{{$i}} = [{{$key['bottom']}} - {{$key['top']}}]</td>
+                                <td class="center">U{{$i}} =  </td>
+                                <td>{{$key['bottom']}}</td>
+                                <td>{{$key['top']}}</td>
                                 <td class="center">{{$key['median']}}</td>
                                 </tr>
                                 @php
@@ -115,10 +119,10 @@ active
         </div>
     </div>
     
-    <!-- Hasil Fuzzy Relationship -->
+    <!-- Hasil Fuzzifikasi & Pembentukan Fuzzy Relationship -->
     <div class="col-xs-12">
         <div class="panel panel-default">
-            <div class="panel-heading panel-heading-divider">Hasil Fuzzy Relationship Orde {{$orde}}.<span class="panel-subtitle"></span></div>
+            <div class="panel-heading panel-heading-divider">Fuzzy Logic Relationship (FLR) Orde {{$orde}}.<span class="panel-subtitle"></span></div>
             <div class="panel-body">
                 <div class="row">
                     <table id="table2" class="table table-striped table-hover table-fw-widget">
@@ -164,7 +168,7 @@ active
     <!-- FLRG Model Chen -->
     <div class="col-xs-12">
         <div class="panel panel-default">
-            <div class="panel-heading panel-heading-divider">FLRG Model Chen Berdasarkan orde {{$orde}}.<span class="panel-subtitle"></span></div>
+            <div class="panel-heading panel-heading-divider">FLRG Model Chen Berdasarkan Orde {{$orde}}.<span class="panel-subtitle"></span></div>
             <div class="panel-body">
                 <div class="row">
                     <table id="table3" class="table table-striped table-hover table-fw-widget">
@@ -208,7 +212,7 @@ active
     <!-- FLRG Model Lee -->
     <div class="col-xs-12">
         <div class="panel panel-default">
-            <div class="panel-heading panel-heading-divider">FLRG Model Lee Berdasarkan orde {{$orde}}.<span class="panel-subtitle"></span></div>
+            <div class="panel-heading panel-heading-divider">FLRG Model Lee Berdasarkan Orde {{$orde}}.<span class="panel-subtitle"></span></div>
             <div class="panel-body">
                 <div class="row">
                     <table id="table4" class="table table-striped table-hover table-fw-widget">
@@ -252,7 +256,7 @@ active
     <!-- Defuzzification Model Chen -->
     <div class="col-xs-12">
         <div class="panel panel-default">
-            <div class="panel-heading panel-heading-divider">Defuzzification Model Chen Berdasarkan orde {{$orde}}.<span class="panel-subtitle"></span></div>
+            <div class="panel-heading panel-heading-divider">Defuzzification Model Chen Berdasarkan Orde {{$orde}}.<span class="panel-subtitle"></span></div>
             <div class="panel-body">
                 <div class="row">
                     <table id="table5" class="table table-striped table-hover table-fw-widget">
@@ -353,7 +357,7 @@ active
                         <tr>
                             <th>No</th>
                             <th>Tanggal</th>
-                            <th>Jumlah Data</th>
+                            <th>Data</th>
                             <th>Fuzzification</th>
                             <th>Relasi</th>
                             <th>Prediksi</th>
@@ -656,7 +660,7 @@ active
                     <p>Berdasarkan hasil perhitungan Prediksi Data Time Series Anda Menggunakan Fuzzy Time Series dengan membandingkan Model Chen dan Lee didapatkan bahwa Model Chen dan Model Lee memiliki tingkat akurasi yang sama yaitu mencapai {{$hasil['accuration']}}%
                         </p>
                     @else
-                    <p>Berdasarkan hasil perhitungan Prediksi Data Time Series Anda Menggunakan Fuzzy Time Series dengan membandingkan Model Chen dan Lee didapatkan bahwa Model {{$hasil['model']}} Lebih baik dengan tingkat akurasi mencapai {{$hasil['accuration']}}%
+                    <p>Berdasarkan hasil perhitungan Prediksi Data Time Series Anda Menggunakan Fuzzy Time Series dengan membandingkan Model Chen dan Lee didapatkan bahwa Model {{$hasil['model']}} lebih baik dengan tingkat akurasi mencapai {{$hasil['accuration']}}%
                         </p>
                     @endif
                 </div>

@@ -12,7 +12,7 @@ class DatasetController extends Controller
 {
     public function index(){
         $data['dataset']= Dataset::all();
-        return view('datasets',$data);
+        return redirect(route('dataset'));
     }
 
     public function reset(){
@@ -98,9 +98,8 @@ class DatasetController extends Controller
           }
         $object = (object)($temp);
         $n=0;
-        $hasil=[];
+        $result=[];
         foreach ($flr as $key2) {
-    
           if (!is_null($key2['orde'])) {
             $temp_orde='';
           foreach ($key2['orde'] as $key3) {
@@ -112,8 +111,7 @@ class DatasetController extends Controller
             }
           }
         }
-    
-        $result=array_unique($result);
+        $result=array_unique($result); # the array isn't counted
         asort($result);
         $temp_result = $result;
         $result=[];
@@ -148,7 +146,6 @@ class DatasetController extends Controller
         $n=0;
         $result=[];
         foreach ($flr as $key2) {
-    
           if (!is_null($key2['orde'])) {
             $temp_orde='';
           foreach ($key2['orde'] as $key3) {
@@ -160,9 +157,7 @@ class DatasetController extends Controller
             }
           }
         }
-    
-        $result=array_count_values($result);
-    
+        $result=array_count_values($result); # the array is counted
         $final_result = (object)($result);
         $lee[$i] = ['relation'=>$object,'result'=>$final_result];
         $i++;
@@ -193,8 +188,8 @@ class DatasetController extends Controller
         $flrg[$i]=$key;
         $i++;
       }
-      $hasil=$this->model_chen($flr,$flrg);
-      return $hasil;
+      $result=$this->model_chen($flr,$flrg);
+      return $result;
     }
 
     // FLRG Lee
@@ -234,7 +229,7 @@ class DatasetController extends Controller
           $temp+=$interval[$key2]['median'];
           $i++;
         }
-        $prediction=$temp/$i;
+        $prediction=$temp/$i; # getting prediction value
         $defuzzification[$n]=['relation'=>$key['relation'],'result'=>$key['result'],'prediction'=>$prediction];
         $n++;
       }
@@ -301,13 +296,16 @@ class DatasetController extends Controller
       $i=0;
 
       foreach ($relation as $key) {
+        // Rule 1 if relation exists
         if (!is_null($key['relation'])) {
           foreach ($defuzzification_relation as $key2) {
             if ($key['relation']==$key2['relation']) {
               $prediction[$i]=['tanggal'=>$key['tanggal'], 'data'=>$key['data'], 'fuzzification'=>$key['fuzzification'],'orde'=>$key['orde'], 'relation'=>$key['relation'],'prediction'=>$key2['prediction']];
             }
           }
-        }else {
+        }
+        # Rule 2 if relation doesn't exists
+        else {
           $prediction[$i]=['tanggal'=>$key['tanggal'], 'data'=>$key['data'], 'fuzzification'=>$key['fuzzification'],'orde'=>$key['orde'], 'relation'=>$key['relation'],'prediction'=>null];
         }
         $i++;
@@ -379,45 +377,45 @@ class DatasetController extends Controller
 
     public function hitung(Request $request){
       $orde = $request->orde;
-      $data_count= Dataset::all()->count();
-      $dataset=Dataset::all();
+      if ($orde <= 0) {
+        return redirect(route('dataset'))->with('zero', 'Data Orde tidak boleh kurang dari 1 (satu)!');
+      }
+
+      $data_count= Dataset::all()->count(); # counting all data
       if ($data_count==0) {
         return redirect(route('dataset'))->with('warning', 'Dataset does not exists!');
       }
-      $data['dataset'] = $dataset;
-      $k=(int)round(1+3.3*log10($data_count)); # class count
-      $data['k']=$k; # class count inserted into variables
-      // ERROR DI SINI, MAX MIN GAK MUNCUL APABILA DATA KECIL
+
+      $dataset=Dataset::all(); # getting all data
+      $data['dataset'] = $dataset; # assign dataset into variable
       $max = Dataset::max('data'); # get max data value
-      $data['max'] = (int)$max;
+      $data['max'] = (int)$max; # assign max data value into variable
       $min = Dataset::min('data'); # get min data value
-      $data['min'] = (int)$min;
-      $d1 = substr($min, -2); # D1
-      $d1 = (int)$d1;
+      $data['min'] = (int)$min; # assign min data value into variable
+      $d1 = substr($min, -1); # D1
+      $d1 = (int)$d1; # declaring D1 value
       $data['d1'] = $d1;
       if($d1 == 0){
-        $umin = $min;
+        $dmin = $min;
       }else{
-        $umin = $min - $d1;
+        $dmin = $min - $d1;
       }
-      $d2 = substr($max, -2); # D2
+      $d2 = substr($max, -1); # D2
       $d2 = (int)$d2;
       $data['d2'] = $d2;
       if($d2 == 0){
-        $umax = $max;
+        $dmax = $max;
       }else{
-        $umax = $max - $d2;
+        $dmax = $max - $d2;
       }
-      $data['umin'] = $umin;
-      $data['umax'] = $umax;
-      // $k = (int)round(1+3.3*log10($data_count));
-      // $data['k']= $k; # class count inserted into variables
-      $class_length= ($umax - $umin)/$k; # definiting class length
-      $data['class_length']= $class_length; # class count inserted into variables
-      $interval = (int)($umax - $umin)/$k; # new interval
-      // $interval=round(($max-$min)/$k,2); #get interval value
-      $data['range']=$interval; 
-
+      $data['dmin'] = $dmin;
+      $data['dmax'] = $dmax;
+      $k=(int)round(1+3.3*log10($data_count)); # getting interval
+      $data['k']=$k; # declaring interval into variable
+      $interval = (int)($dmax - $dmin)/$k; # getting range of interval
+      $data['range'] = $interval; # declaring range of interval value into variable
+      
+      # Generate interval data
       $i=0;
       $temp=$min;
       for ($i=0;$i<$k;$i++) {
@@ -426,10 +424,10 @@ class DatasetController extends Controller
         $data['interval'][$i] = ['bottom'=>$bottom,'top'=>$temp,'median'=>($bottom+$temp)/2];
       }
       
-      $data['flr']                  = $this->fuzzification($dataset, $data['interval'], $orde);
+      $data['flr']                  = $this->fuzzification($dataset, $data['interval'], $orde); # Fuzzy Logic Relationship
       $data['orde']                 = $orde;
-      $data['flrg_lee']             = $this->flrg_lee($data['flr']);
-      $data['flrg_chen']            = $this->flrg_chen($data['flr']);
+      $data['flrg_lee']             = $this->flrg_lee($data['flr']); # FLR Model Lee
+      $data['flrg_chen']            = $this->flrg_chen($data['flr']); # FLR Model Chen
       $data['defuzzification_chen'] = $this->defuzzification_chen($data['flrg_chen'], $data['interval']);
       $data['defuzzification_lee']  = $this->defuzzification_lee($data['flrg_lee'], $data['interval']);
       $data['chen_prediction']      = $this->prediction($data['flr'], $data['defuzzification_chen']);
